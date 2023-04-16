@@ -19,6 +19,7 @@
 		0080E64029EC710D0085234E /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0080E63F29EC710D0085234E /* CategoryViewController.swift */; };
 		0080E64329EC71440085234E /* ScoreTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0080E64229EC71440085234E /* ScoreTeamViewController.swift */; };
 		0080E64629EC71510085234E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0080E64529EC71510085234E /* GameViewController.swift */; };
+		0080E64B29EC724A0085234E /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0080E64A29EC724A0085234E /* GameModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		0080E63F29EC710D0085234E /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		0080E64229EC71440085234E /* ScoreTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTeamViewController.swift; sourceTree = "<group>"; };
 		0080E64529EC71510085234E /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		0080E64A29EC724A0085234E /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 		0080E64929EC71B70085234E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0080E64A29EC724A0085234E /* GameModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 				0080E64329EC71440085234E /* ScoreTeamViewController.swift in Sources */,
 				0080E64029EC710D0085234E /* CategoryViewController.swift in Sources */,
 				0080E64629EC71510085234E /* GameViewController.swift in Sources */,
+				0080E64B29EC724A0085234E /* GameModel.swift in Sources */,
 				00719EB529EC5C5A00D6E29A /* MainViewController.swift in Sources */,
 				0080E63729EC70C50085234E /* ResultGameViewController.swift in Sources */,
 				00719EB129EC5C5A00D6E29A /* AppDelegate.swift in Sources */,
