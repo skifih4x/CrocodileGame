@@ -19,7 +19,6 @@ class GameViewController: UIViewController {
     private lazy var crocodileImage: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "crocodile"))
         imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -156,8 +155,7 @@ class GameViewController: UIViewController {
             buttonsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             buttonsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             buttonsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
-            
-        
+            buttonsStackView.heightAnchor.constraint(equalToConstant: 200),
             
             errorLabel.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16),
             errorLabel.leftAnchor.constraint(equalTo: backgroundView.leftAnchor, constant: 16),
