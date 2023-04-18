@@ -34,7 +34,7 @@ class TeamViewController: UIViewController {
   
   private lazy var tableView: UITableView = {
     let element = UITableView()
-    element.rowHeight = 96
+    element.rowHeight = 120
     element.backgroundColor = .clear
     element.register(CustomCell.self, forCellReuseIdentifier: CustomCell.reuseIdentifier)
     element.layer.cornerRadius = 10
@@ -61,6 +61,46 @@ class TeamViewController: UIViewController {
   }
 }
 
+//  MARK: - UITableViewDataSource, UITableViewDelegate
+extension TeamViewController: UITableViewDataSource, UITableViewDelegate {
+  
+  func numberOfSections(in tableView: UITableView) -> Int {
+    2
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    1
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomCell.reuseIdentifier, for: indexPath) as? CustomCell else { return UITableViewCell() }
+    cell.layer.cornerRadius = 10
+    cell.clipsToBounds = true
+    
+    switch indexPath.section {
+    case 0:
+      cell.configure(playerName: "Ковбои", imageName: "people")
+    default:
+      cell.configure(playerName: "Стройняшки", imageName: "food")
+    }
+    return cell
+  }
+  
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    1
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+  }
+  
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let hearderView = UIView()
+    return hearderView
+  }
+  
+}
+
 //  MARK: -  Private Methods
 extension TeamViewController {
   private func setViews() {
@@ -77,7 +117,7 @@ extension TeamViewController {
     }
     
     arrowButton.snp.makeConstraints { make in
-      make.leading.equalToSuperview().inset(16)
+      make.leading.equalToSuperview().inset(14)
       make.centerY.equalTo(textLabel.snp.centerY)
     }
     
@@ -87,7 +127,7 @@ extension TeamViewController {
     }
     
     tableView.snp.makeConstraints { make in
-      make.top.equalTo(textLabel.snp.bottom).offset(36)
+      make.top.equalTo(textLabel.snp.bottom).offset(16)
       make.leading.trailing.equalToSuperview().inset(14)
       make.height.equalToSuperview().multipliedBy(0.5)
     }
@@ -97,33 +137,6 @@ extension TeamViewController {
       make.bottom.equalToSuperview().inset(62)
       make.height.equalTo(63)
     }
-    
-  }
-}
-
-//  MARK: - UITableViewDataSource, UITableViewDelegate
-extension TeamViewController: UITableViewDataSource, UITableViewDelegate {
-  
-  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    2
-  }
-  
-  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomCell.reuseIdentifier, for: indexPath) as? CustomCell else { return UITableViewCell() }
-    
-    switch indexPath.row {
-    case 0:
-      cell.playerLabel.text = "Ковбои"
-      cell.playerImage.image = UIImage(named: "people")
-    default:
-      cell.playerLabel.text = "Стройняшки"
-      cell.playerImage.image = UIImage(named: "food")
-    }
-    return cell
-  }
-  
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
   }
 }
 

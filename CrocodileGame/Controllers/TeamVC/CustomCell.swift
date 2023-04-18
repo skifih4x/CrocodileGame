@@ -6,18 +6,19 @@
 //
 
 import UIKit
+import SnapKit
 
 class CustomCell: UITableViewCell {
   //  MARK: - Public Properties
   static let reuseIdentifier = String(describing: CustomCell.self)
   
   //  MARK: - UI Elements
-  var playerImage: UIImageView = {
+  private lazy var playerImage: UIImageView = {
     let element = UIImageView()
     return element
   }()
   
-  var playerLabel: UILabel = {
+  private lazy var playerLabel: UILabel = {
     let element = UILabel()
     element.textAlignment = .center
     element.numberOfLines = 0
@@ -39,6 +40,12 @@ class CustomCell: UITableViewCell {
 
 //  MARK: -  Private Methods
 extension CustomCell {
+  
+  func configure(playerName: String, imageName: String) {
+    playerLabel.text = playerName
+    playerImage.image = UIImage(named: imageName)
+  }
+  
   private func setViews() {
     addSubview(playerImage)
     addSubview(playerLabel)
@@ -52,6 +59,7 @@ extension CustomCell {
     playerImage.snp.makeConstraints { make in
       make.leading.equalToSuperview().inset(17)
       make.centerY.equalToSuperview()
+      make.height.width.equalTo(45)
     }
   }
 }
