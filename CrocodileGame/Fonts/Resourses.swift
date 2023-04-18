@@ -10,8 +10,8 @@ import UIKit
 enum Resources {
     
     enum Fonts {
-        static func Bhavuka (with size:CGFloat) -> UIFont {
-            UIFont(name: "Bhavuka", size: size) ?? UIFont()
+        static func CookieRegular (with size:CGFloat) -> UIFont {
+            UIFont(name: "Cookie-Regular", size: size) ?? UIFont()
             
         }
     }

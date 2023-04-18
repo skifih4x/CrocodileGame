@@ -10,9 +10,9 @@ import UIKit
 
 extension UILabel {
     
-    static var buhavkaWhite: UILabel {
+    static var CookieRegular: UILabel {
         let label = UILabel(frame: .zero)
-        label.font = Resources.Fonts.Bhavuka(with: 20)
+        label.font = Resources.Fonts.CookieRegular(with: 20)
         return label
     }
     

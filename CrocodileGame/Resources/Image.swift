@@ -18,7 +18,7 @@ extension UIImageView {
     
     static var crocodile: UIImageView {
         let image = UIImageView()
-        image.image = UIImage(named: "crocodile")
+        image.image = UIImage(named: "pngwing")
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }
