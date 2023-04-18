@@ -10,11 +10,11 @@ import UIKit
 class ResultGameViewController: UIViewController {
     
     var team = ["Ковбои", "Стройняшки", "Красотки","Ковбои"]
-    var points = 5
+    var points = String(5)
     
     private lazy var labelResult: UILabel = {
        let label = UILabel()
-        label.text = "Таблица лидеров"
+        label.text = "Результаты"
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 34)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -29,7 +29,7 @@ class ResultGameViewController: UIViewController {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.backgroundColor = .clear
         tableView.rowHeight = 100
-//        tableView.layer.cornerRadius = 20
+        tableView.layer.cornerRadius = 10
         tableView.isScrollEnabled = false
         tableView.allowsSelection = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -89,7 +89,7 @@ extension ResultGameViewController {
             tableViewTeam.topAnchor.constraint(equalTo: view.topAnchor, constant: 120),
             tableViewTeam.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             tableViewTeam.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            tableViewTeam.heightAnchor.constraint(equalToConstant: CGFloat(team.count*100)),
+            tableViewTeam.heightAnchor.constraint(equalToConstant: CGFloat(team.count*130)),
 
             playAgainButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
             playAgainButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
@@ -102,29 +102,67 @@ extension ResultGameViewController {
 
 extension ResultGameViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        team.count
+//    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         team.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "team", for: indexPath) as? TableViewTeamCell else {
             return UITableViewCell()
         }
-        
-        let teamName = team[indexPath.row]
-        cell.set(buttonImage: teamName)
-        cell.set(teamName: teamName)
-        cell.labelCount.text = String(points)
-        cell.labelPoint.text = "Очки"
+        cell.layer.cornerRadius = 10
+        cell.clipsToBounds = true
+
+        switch indexPath.section {
+        case 0:
+            cell.imageLogo.image = UIImage(named: "Ковбои")
+            cell.labelNameTeam.text = "Ковбои"
+            cell.labelCount.text = points
+            
+        case 1:
+            cell.imageLogo.image = UIImage(named: "Красотки")
+            cell.labelNameTeam.text = "Красотки"
+            cell.labelCount.text = points
+            
+        case 2:
+            cell.imageLogo.image = UIImage(named: "Красотки")
+            cell.labelNameTeam.text = "Красотки"
+            cell.labelCount.text = points
+            
+        case 3:
+            cell.imageLogo.image = UIImage(named: "Красотки")
+            cell.labelNameTeam.text = "Красотки"
+            cell.labelCount.text = points
+            
+        default:
+            cell.imageLogo.image = UIImage(named: "Ковбои")
+            cell.labelNameTeam.text = "Ковбои"
+            cell.labelCount.text = points
+
+        }
         return cell
+      }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+      1
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let myView = UIView(frame: CGRect(x: 0, y: 0, width: cell.contentView.frame.width, height: 25))
-        myView.backgroundColor = #colorLiteral(red: 0.8439154029, green: 1, blue: 0.6671893001, alpha: 1)
-//        cell.contentView.layer.cornerRadius = 20
-        cell.contentView.addSubview(myView)
-        cell.contentView.sendSubviewToBack(myView)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("aa")
+//      tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+      let hearderView = UIView()
+      return hearderView
     }
 
 }
