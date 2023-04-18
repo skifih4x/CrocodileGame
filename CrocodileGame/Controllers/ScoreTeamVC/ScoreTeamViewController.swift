@@ -13,6 +13,7 @@ class ScoreTeamViewController: UIViewController {
         let imageView = UIImageView(image: UIImage(named: "background"))
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -64,7 +65,7 @@ class ScoreTeamViewController: UIViewController {
         return label
     }()
     
-    private lazy var resultOfRoundView: UIView = {
+    var resultOfRoundView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red: 0.455, green: 0.655, blue: 0.188, alpha: 1)
         view.layer.cornerRadius = 20
@@ -72,7 +73,7 @@ class ScoreTeamViewController: UIViewController {
         return view
     }()
     
-    private lazy var congratsLabel: UILabel = {
+     var congratsLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
         label.text = "Поздравляем"
@@ -81,7 +82,7 @@ class ScoreTeamViewController: UIViewController {
         return label
     }()
     
-    private lazy var youGotLabel: UILabel = {
+     var youGotLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         label.text = "Вы получаете"
@@ -97,7 +98,7 @@ class ScoreTeamViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var resultLabel: UILabel = {
+      var resultLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 70, weight: .regular)
         label.text = "1"
@@ -126,13 +127,14 @@ class ScoreTeamViewController: UIViewController {
     
     private lazy var passButton: UIButton = {
         let button = UIButton()
+        button.frame = CGRect(x: 0, y: 0, width: 351, height: 60)
         button.backgroundColor = UIColor(red: 0.455, green: 0.655, blue: 0.188, alpha: 1)
         button.setTitle("Передать ход", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
-        //        button.addTarget(self, action: #selector(self.didTapXButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isUserInteractionEnabled  = true
+        button.addTarget(self, action: #selector(tapPassButton), for: .touchUpInside)
         return button
     }()
     
@@ -140,6 +142,7 @@ class ScoreTeamViewController: UIViewController {
         super.viewDidLoad()
         subviews()
         setupConstraints()
+        navigationItem.hidesBackButton = true
     }
     
     private func subviews() {
@@ -224,5 +227,10 @@ class ScoreTeamViewController: UIViewController {
             passButton.heightAnchor.constraint(equalToConstant: 50)
             
         ])
+    }
+    
+    
+    @objc func tapPassButton() {
+        print("tapped")
     }
 }
