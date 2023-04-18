@@ -132,19 +132,9 @@ extension ResultGameViewController: UITableViewDelegate, UITableViewDataSource {
             cell.labelNameTeam.text = "Красотки"
             cell.labelCount.text = points
             
-        case 2:
-            cell.imageLogo.image = UIImage(named: "Красотки")
-            cell.labelNameTeam.text = "Красотки"
-            cell.labelCount.text = points
-            
-        case 3:
-            cell.imageLogo.image = UIImage(named: "Красотки")
-            cell.labelNameTeam.text = "Красотки"
-            cell.labelCount.text = points
-            
         default:
-            cell.imageLogo.image = UIImage(named: "Ковбои")
-            cell.labelNameTeam.text = "Ковбои"
+            cell.imageLogo.image = UIImage(named: team.randomElement() ?? "")
+            cell.labelNameTeam.text = team.randomElement() ?? "Look"
             cell.labelCount.text = points
 
         }
