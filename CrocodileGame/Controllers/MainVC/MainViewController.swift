@@ -81,7 +81,7 @@ class MainViewController: UIViewController {
     }
     
     @objc func result () {
-        let destinationViewController = ResultGameViewController()
+        let destinationViewController = TeamLeadersViewController()
         self.navigationController?.pushViewController(destinationViewController, animated: true)
 
     }
