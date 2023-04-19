@@ -11,7 +11,14 @@ class GameViewController: UIViewController {
     
     var timer = Timer()
     var counter = 60
-    
+  
+    class DataManager {
+        static let shared = DataManager()
+        var totalRounds = 0
+        var currentTeam = 1
+        var numberOfTeams = 1
+    }
+        
     private lazy var backgroundView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "background"))
         imageView.contentMode = .scaleAspectFit
@@ -50,7 +57,7 @@ class GameViewController: UIViewController {
     private lazy var howToExplainLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
-        label.text = "Обьясни с помощью жестов"
+        label.text = howToExplainArray.randomElement()
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -135,7 +142,6 @@ class GameViewController: UIViewController {
         buttonsStackView.addArrangedSubview(rightButton)
         buttonsStackView.addArrangedSubview(wrongButton)
         buttonsStackView.addArrangedSubview(resetButton)
-//        backgroundView.addSubview(errorLabel)
     }
     
     func setupConstraints() {
@@ -166,10 +172,6 @@ class GameViewController: UIViewController {
             buttonsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             buttonsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             buttonsStackView.heightAnchor.constraint(equalToConstant: 200),
-            
-//            errorLabel.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16),
-//            errorLabel.leftAnchor.constraint(equalTo: backgroundView.leftAnchor, constant: 16),
-//            errorLabel.rightAnchor.constraint(equalTo: backgroundView.rightAnchor, constant: -16)
         ])
     }
     
@@ -183,11 +185,23 @@ class GameViewController: UIViewController {
     }
     
     @objc func tapRightButton() {
+        let dm = DataManager.shared
+        dm.currentTeam += 1
+        if dm.currentTeam > dm.numberOfTeams {
+            dm.currentTeam = 1
+        }
+        dm.totalRounds += 1
         let VC = ScoreTeamViewController()
         navigationController?.pushViewController(VC, animated: true)
     }
     
     @objc func tapWrongButton() {
+        let dm = DataManager.shared
+        dm.currentTeam += 1
+        if dm.currentTeam > dm.numberOfTeams {
+            dm.currentTeam = 1
+        }
+        dm.totalRounds += 1
         let VC = ScoreTeamViewController()
         VC.congratsLabel.text = "УВЫ И АХ!"
         VC.youGotLabel.text = "Вы не отгадали слово и не получаете очков!"
@@ -198,11 +212,11 @@ class GameViewController: UIViewController {
     
     @objc func tapResetButton() {
         let ac = UIAlertController(title: "Сбросить игру?", message: "Вы хотите сбросить вашу игру и вернуться в главное меню?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Отмена", style: .default, handler: nil))
+        present(ac, animated: true, completion: nil)
         ac.addAction(UIAlertAction(title: "Да", style: .destructive, handler: { (action: UIAlertAction!) in
             let VC = MainViewController()
             self.navigationController?.pushViewController(VC, animated: true)
         }))
-        ac.addAction(UIAlertAction(title: "Отмена", style: .default, handler: nil))
-        present(ac, animated: true, completion: nil)
     }
 }

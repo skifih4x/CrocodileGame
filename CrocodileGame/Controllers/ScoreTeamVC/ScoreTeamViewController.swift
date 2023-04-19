@@ -49,7 +49,7 @@ class ScoreTeamViewController: UIViewController {
     
     private lazy var teamScoreLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 50, weight: .regular)
+        label.font = Resources.Fonts.CookieRegular(with: 50)
         label.text = "1"
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -73,7 +73,7 @@ class ScoreTeamViewController: UIViewController {
         return view
     }()
     
-     var congratsLabel: UILabel = {
+    var congratsLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
         label.text = "Поздравляем"
@@ -82,7 +82,7 @@ class ScoreTeamViewController: UIViewController {
         return label
     }()
     
-     var youGotLabel: UILabel = {
+    var youGotLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         label.text = "Вы получаете"
@@ -98,9 +98,9 @@ class ScoreTeamViewController: UIViewController {
         return imageView
     }()
     
-      var resultLabel: UILabel = {
+    var resultLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 70, weight: .regular)
+        label.font = Resources.Fonts.CookieRegular(with: 70)
         label.text = "1"
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -138,11 +138,26 @@ class ScoreTeamViewController: UIViewController {
         return button
     }()
     
+    private lazy var resultsButton: UIButton = {
+        let button = UIButton()
+        button.isHidden = true
+        button.frame = CGRect(x: 0, y: 0, width: 351, height: 60)
+        button.backgroundColor = UIColor(red: 0.455, green: 0.655, blue: 0.188, alpha: 1)
+        button.setTitle("Результаты", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isUserInteractionEnabled  = true
+        button.addTarget(self, action: #selector(resultsTapped), for: .touchUpInside)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         subviews()
         setupConstraints()
         navigationItem.hidesBackButton = true
+        reloadButton()
     }
     
     private func subviews() {
@@ -150,6 +165,7 @@ class ScoreTeamViewController: UIViewController {
         backgroundView.addSubview(teamView)
         backgroundView.addSubview(resultOfRoundView)
         backgroundView.addSubview(passButton)
+        backgroundView.addSubview(resultsButton)
         teamView.addSubview(avatarTeamImage)
         teamView.addSubview(teamNameLabel)
         teamView.addSubview(teamScoreView)
@@ -213,7 +229,7 @@ class ScoreTeamViewController: UIViewController {
             
             resultLabel.centerXAnchor.constraint(equalTo: starImage.centerXAnchor),
             resultLabel.centerYAnchor.constraint(equalTo: starImage.centerYAnchor),
-           
+            
             scoreLabel.centerXAnchor.constraint(equalTo: resultOfRoundView.centerXAnchor),
             scoreLabel.topAnchor.constraint(equalTo: starImage.bottomAnchor),
             
@@ -224,13 +240,34 @@ class ScoreTeamViewController: UIViewController {
             passButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             passButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 12),
             passButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -12),
-            passButton.heightAnchor.constraint(equalToConstant: 50)
+            passButton.heightAnchor.constraint(equalToConstant: 50),
             
+            resultsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
+            resultsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            resultsButton.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 12),
+            resultsButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -12),
+            resultsButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
+    func reloadButton(){
+        if GameViewController.DataManager.shared.totalRounds == 5 {
+            GameViewController.DataManager.shared.totalRounds = 0
+            passButton.isHidden = true
+            resultsButton.isHidden = false
+        }
+    }
     
     @objc func tapPassButton() {
-        print("tapped")
+        let VC = GameViewController()
+        if GameViewController.DataManager.shared.totalRounds < 5 {
+            self.navigationController?.pushViewController(VC, animated: true)
+        }
+    }
+    
+    @objc func resultsTapped() {
+        let VC = ResultGameViewController()
+        self.navigationController?.pushViewController(VC, animated: true)
     }
 }
+
