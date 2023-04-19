@@ -41,6 +41,16 @@ class TeamViewController: UIViewController {
     return element
   }()
   
+  private lazy var addButton: UIButton = {
+    let element = UIButton(type: .system)
+    element.backgroundColor = #colorLiteral(red: 0.9817476869, green: 0.4708241224, blue: 0.00089761446, alpha: 1)
+    element.setTitle("Добавить игроков", for: .normal)
+    element.tintColor = .white
+    element.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+    element.layer.cornerRadius = 10
+    return element
+  }()
+  
   private lazy var readyButton: UIButton = {
     let element = UIButton(type: .system)
     element.backgroundColor = #colorLiteral(red: 0.4534765482, green: 0.6565048099, blue: 0.187305212, alpha: 1)
@@ -56,8 +66,7 @@ class TeamViewController: UIViewController {
     super.viewDidLoad()
     setViews()
     setConstraints()
-    tableView.dataSource = self
-    tableView.delegate = self
+    setDelegates()
   }
 }
 
@@ -65,7 +74,7 @@ class TeamViewController: UIViewController {
 extension TeamViewController: UITableViewDataSource, UITableViewDelegate {
   
   func numberOfSections(in tableView: UITableView) -> Int {
-    2
+    3
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -80,14 +89,16 @@ extension TeamViewController: UITableViewDataSource, UITableViewDelegate {
     switch indexPath.section {
     case 0:
       cell.configure(playerName: "Ковбои", imageName: "people")
-    default:
+    case 1:
       cell.configure(playerName: "Стройняшки", imageName: "food")
+    default:
+      cell.configure(playerName: "Красотки", imageName: "hobby")
     }
     return cell
   }
   
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    1
+    5
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -96,6 +107,7 @@ extension TeamViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let hearderView = UIView()
+    hearderView.backgroundColor = .clear
     return hearderView
   }
   
@@ -103,11 +115,17 @@ extension TeamViewController: UITableViewDataSource, UITableViewDelegate {
 
 //  MARK: -  Private Methods
 extension TeamViewController {
+  private func setDelegates() {
+    tableView.dataSource = self
+    tableView.delegate = self
+  }
+  
   private func setViews() {
     view.addSubview(background)
     view.addSubview(arrowButton)
     view.addSubview(textLabel)
     view.addSubview(tableView)
+    view.addSubview(addButton)
     view.addSubview(readyButton)
   }
   
@@ -130,6 +148,12 @@ extension TeamViewController {
       make.top.equalTo(textLabel.snp.bottom).offset(16)
       make.leading.trailing.equalToSuperview().inset(14)
       make.height.equalToSuperview().multipliedBy(0.5)
+    }
+    
+    addButton.snp.makeConstraints { make in
+      make.leading.trailing.equalToSuperview().inset(14)
+      make.bottom.equalTo(readyButton.snp.top).offset(-18)
+      make.height.equalTo(63)
     }
     
     readyButton.snp.makeConstraints { make in
