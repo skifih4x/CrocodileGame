@@ -30,7 +30,9 @@ class CategoryCell: UITableViewCell {
   
   private lazy var checkmarkImage: UIImageView = {
     let element = UIImageView()
-    element.image = UIImage(named: "checkmark2")
+    element.image = UIImage(systemName: "checkmark.circle.fill")
+    element.tintColor = .white
+    element.backgroundColor = .clear
     element.layer.cornerRadius = 15
     element.clipsToBounds = true
     element.isHidden = true

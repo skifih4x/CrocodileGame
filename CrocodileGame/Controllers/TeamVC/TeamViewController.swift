@@ -86,7 +86,7 @@ extension TeamViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    1
+    10
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -95,6 +95,7 @@ extension TeamViewController: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let hearderView = UIView()
+    hearderView.backgroundColor = .clear
     return hearderView
   }
   
