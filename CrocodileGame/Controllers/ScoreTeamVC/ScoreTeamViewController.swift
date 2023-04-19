@@ -49,7 +49,7 @@ class ScoreTeamViewController: UIViewController {
     
     private lazy var teamScoreLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 50, weight: .regular)
+        label.font = Resources.Fonts.CookieRegular(with: 50)
         label.text = "1"
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -100,7 +100,7 @@ class ScoreTeamViewController: UIViewController {
     
     var resultLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 70, weight: .regular)
+        label.font = Resources.Fonts.CookieRegular(with: 70)
         label.text = "1"
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false

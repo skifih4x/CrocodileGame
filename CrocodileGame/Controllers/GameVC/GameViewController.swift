@@ -185,21 +185,23 @@ class GameViewController: UIViewController {
     }
     
     @objc func tapRightButton() {
-        DataManager.shared.currentTeam += 1
-        if DataManager.shared.currentTeam > DataManager.shared.numberOfTeams {
-            DataManager.shared.currentTeam = 1
+        let dm = DataManager.shared
+        dm.currentTeam += 1
+        if dm.currentTeam > dm.numberOfTeams {
+            dm.currentTeam = 1
         }
-        DataManager.shared.totalRounds += 1
+        dm.totalRounds += 1
         let VC = ScoreTeamViewController()
         navigationController?.pushViewController(VC, animated: true)
     }
     
     @objc func tapWrongButton() {
-        DataManager.shared.currentTeam += 1
-        if DataManager.shared.currentTeam > DataManager.shared.numberOfTeams {
-            DataManager.shared.currentTeam = 1
+        let dm = DataManager.shared
+        dm.currentTeam += 1
+        if dm.currentTeam > dm.numberOfTeams {
+            dm.currentTeam = 1
         }
-        DataManager.shared.totalRounds += 1
+        dm.totalRounds += 1
         let VC = ScoreTeamViewController()
         VC.congratsLabel.text = "УВЫ И АХ!"
         VC.youGotLabel.text = "Вы не отгадали слово и не получаете очков!"
