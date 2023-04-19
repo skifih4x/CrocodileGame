@@ -32,6 +32,7 @@ class TableViewTeamCell: UITableViewCell {
     var labelPoint: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15)
+        label.text = "Очки"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
  }()

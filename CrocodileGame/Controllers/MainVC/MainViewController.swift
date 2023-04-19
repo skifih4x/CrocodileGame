@@ -63,7 +63,6 @@ class MainViewController: UIViewController {
         view.addSubview(grassLeft)
         view.addSubview(grassRight)
         view.addSubview(startButton)
-//        view.addSubview(startLabel)
         view.addSubview(rulesButton)
         view.addSubview(resultButton)
 
@@ -82,7 +81,7 @@ class MainViewController: UIViewController {
     }
     
     @objc func result () {
-        let destinationViewController = ResultGameViewController()
+        let destinationViewController = TeamLeadersViewController()
         self.navigationController?.pushViewController(destinationViewController, animated: true)
 
     }
