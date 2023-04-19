@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 let animalsArray = [
     "Собака", "Креветка", "Пеликан", "Осьминог", "Енот-полоскун",
@@ -45,3 +46,10 @@ let howToExplainArray = [
     "Объясняй сексуально"
 ]
 
+var teams: [String: Int] = [
+    "Ковбои": 0,
+    "Стройняшки": 0
+]
+
+let avatars = [UIImage(named: "Ковбои"), UIImage(named: "Красотки"), UIImage(named: "food")
+]
