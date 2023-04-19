@@ -56,8 +56,7 @@ class TeamViewController: UIViewController {
     super.viewDidLoad()
     setViews()
     setConstraints()
-    tableView.dataSource = self
-    tableView.delegate = self
+    setDelegates()
   }
 }
 
@@ -103,6 +102,11 @@ extension TeamViewController: UITableViewDataSource, UITableViewDelegate {
 
 //  MARK: -  Private Methods
 extension TeamViewController {
+  private func setDelegates() {
+    tableView.dataSource = self
+    tableView.delegate = self
+  }
+  
   private func setViews() {
     view.addSubview(background)
     view.addSubview(arrowButton)
