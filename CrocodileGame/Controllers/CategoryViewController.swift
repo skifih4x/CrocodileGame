@@ -47,8 +47,11 @@ class CategoryViewController: UIViewController {
     element.tintColor = .white
     element.titleLabel?.font = UIFont.systemFont(ofSize: 20)
     element.layer.cornerRadius = 10
+    element.addTarget(self, action: #selector(showNext), for: .touchUpInside)
     return element
   }()
+  
+  let dataBase = [0: animalsArray, 1: foodArray, 2: peopleArray, 3: hobbyArray]
   
   //  MARK: - Override Methods
   override func viewDidLoad() {
@@ -57,6 +60,13 @@ class CategoryViewController: UIViewController {
     setConstraints()
     tableView.dataSource = self
     tableView.delegate = self
+  }
+  
+  @objc private func showNext(sender: UIButton) {
+    let gameVC = GameViewController()
+    let number = sender.tag
+    gameVC.word = dataBase[number]?.randomElement() ?? ""
+    navigationController?.pushViewController(gameVC, animated: true)
   }
 }
 
@@ -105,6 +115,7 @@ extension CategoryViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     guard let cell = tableView.cellForRow(at: indexPath) as? CategoryCell else { return }
+    startButton.tag = indexPath.section
     cell.showImage()
   }
 }
