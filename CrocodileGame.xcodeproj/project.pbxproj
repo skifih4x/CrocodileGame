@@ -19,6 +19,9 @@
 		0080E64329EC71440085234E /* ScoreTeamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0080E64229EC71440085234E /* ScoreTeamViewController.swift */; };
 		0080E64629EC71510085234E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0080E64529EC71510085234E /* GameViewController.swift */; };
 		0080E64B29EC724A0085234E /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0080E64A29EC724A0085234E /* GameModel.swift */; };
+		5743B7A229F11E41005945A3 /* game-lost.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5743B79F29F11E41005945A3 /* game-lost.wav */; };
+		5743B7A329F11E41005945A3 /* 10sec.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5743B7A029F11E41005945A3 /* 10sec.wav */; };
+		5743B7A429F11E41005945A3 /* pravilnyiy-otvet.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5743B7A129F11E41005945A3 /* pravilnyiy-otvet.wav */; };
 		6803945229EDE2F800FDDCCF /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6803945129EDE2F700FDDCCF /* CustomCell.swift */; };
 		68414B0D29EEF3780019808D /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68414B0C29EEF3780019808D /* CategoryCell.swift */; };
 		685CD6B729ED070300BE0BF8 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 685CD6B629ED070300BE0BF8 /* SnapKit */; };
@@ -47,6 +50,9 @@
 		0080E64229EC71440085234E /* ScoreTeamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTeamViewController.swift; sourceTree = "<group>"; };
 		0080E64529EC71510085234E /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		0080E64A29EC724A0085234E /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		5743B79F29F11E41005945A3 /* game-lost.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "game-lost.wav"; sourceTree = "<group>"; };
+		5743B7A029F11E41005945A3 /* 10sec.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 10sec.wav; sourceTree = "<group>"; };
+		5743B7A129F11E41005945A3 /* pravilnyiy-otvet.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "pravilnyiy-otvet.wav"; sourceTree = "<group>"; };
 		6803945129EDE2F700FDDCCF /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		68414B0C29EEF3780019808D /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		955123E629ED4F6300977447 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -187,6 +193,9 @@
 		0080E64829EC71700085234E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5743B7A029F11E41005945A3 /* 10sec.wav */,
+				5743B79F29F11E41005945A3 /* game-lost.wav */,
+				5743B7A129F11E41005945A3 /* pravilnyiy-otvet.wav */,
 				00719EB929EC5C5B00D6E29A /* Assets.xcassets */,
 				955123E629ED4F6300977447 /* Image.swift */,
 			);
@@ -285,8 +294,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5743B7A329F11E41005945A3 /* 10sec.wav in Resources */,
 				00719EBD29EC5C5B00D6E29A /* LaunchScreen.storyboard in Resources */,
+				5743B7A429F11E41005945A3 /* pravilnyiy-otvet.wav in Resources */,
 				00719EBA29EC5C5B00D6E29A /* Assets.xcassets in Resources */,
+				5743B7A229F11E41005945A3 /* game-lost.wav in Resources */,
 				95E28C2629EE8D030012373B /* Cookie-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

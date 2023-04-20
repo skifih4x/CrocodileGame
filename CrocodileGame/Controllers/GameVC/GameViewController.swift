@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import AVFoundation
 
 class GameViewController: UIViewController {
     
     var timer = Timer()
     var counter = 60
-    
+    var player: AVAudioPlayer!
+  
+
     private lazy var backgroundView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "background"))
         imageView.contentMode = .scaleAspectFit
@@ -50,7 +53,7 @@ class GameViewController: UIViewController {
     private lazy var howToExplainLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
-        label.text = "Обьясни с помощью жестов"
+        label.text = howToExplainArray.randomElement()
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -123,6 +126,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         subviews()
         setupConstraints()
+        navigationItem.hidesBackButton = true
     }
     
     private func subviews() {
@@ -135,7 +139,6 @@ class GameViewController: UIViewController {
         buttonsStackView.addArrangedSubview(rightButton)
         buttonsStackView.addArrangedSubview(wrongButton)
         buttonsStackView.addArrangedSubview(resetButton)
-//        backgroundView.addSubview(errorLabel)
     }
     
     func setupConstraints() {
@@ -166,43 +169,77 @@ class GameViewController: UIViewController {
             buttonsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             buttonsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
             buttonsStackView.heightAnchor.constraint(equalToConstant: 200),
-            
-//            errorLabel.bottomAnchor.constraint(equalTo: backgroundView.topAnchor, constant: -16),
-//            errorLabel.leftAnchor.constraint(equalTo: backgroundView.leftAnchor, constant: 16),
-//            errorLabel.rightAnchor.constraint(equalTo: backgroundView.rightAnchor, constant: -16)
         ])
     }
     
+    func playSound(soundName: String) {
+        let url = Bundle.main.url(forResource: soundName, withExtension: "wav")
+        player = try! AVAudioPlayer(contentsOf: url!)
+        player.play()
+    }
+    
     @objc func updateTimer() {
-        if counter > 0 {
+        switch counter {
+        case 1...10:
+            counter -= 1
+            timerLabel.text = "0:0\(counter.description)"
+        case 11:
+            playSound(soundName: "10sec")
             counter -= 1
             timerLabel.text = "0:\(counter.description)"
-        } else {
+        case 12...60:
+            counter -= 1
+            timerLabel.text = "0:\(counter.description)"
+        case 0:
+            timerLabel.text = "ВРЕМЯ ВЫШЛО"
+            timerLabel.textColor = .red
+        default:
             timer.invalidate()
         }
     }
     
     @objc func tapRightButton() {
+        let dm = DataManager.shared
+        dm.currentTeam += 1
+       
+        if dm.currentTeam > dm.numberOfTeams {
+            dm.currentTeam = 1
+        }
+        dm.totalRounds += 1
+        teams[dm.currentTeam - 1].points += 1
+        
+        timer.invalidate()
         let VC = ScoreTeamViewController()
+        playSound(soundName: "pravilnyiy-otvet")
         navigationController?.pushViewController(VC, animated: true)
     }
+
     
     @objc func tapWrongButton() {
+        let dm = DataManager.shared
+        dm.currentTeam += 1
+        if dm.currentTeam > dm.numberOfTeams {
+            dm.currentTeam = 1
+        }
+        dm.totalRounds += 1
         let VC = ScoreTeamViewController()
         VC.congratsLabel.text = "УВЫ И АХ!"
         VC.youGotLabel.text = "Вы не отгадали слово и не получаете очков!"
         VC.resultLabel.text = "0"
         VC.resultOfRoundView.backgroundColor = UIColor(red: 0.902, green: 0.275, blue: 0.275, alpha: 1)
+        timer.invalidate()
+        playSound(soundName: "game-lost")
         navigationController?.pushViewController(VC, animated: true)
     }
     
     @objc func tapResetButton() {
         let ac = UIAlertController(title: "Сбросить игру?", message: "Вы хотите сбросить вашу игру и вернуться в главное меню?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Отмена", style: .default, handler: nil))
+        present(ac, animated: true, completion: nil)
         ac.addAction(UIAlertAction(title: "Да", style: .destructive, handler: { (action: UIAlertAction!) in
+            self.timer.invalidate()
             let VC = MainViewController()
             self.navigationController?.pushViewController(VC, animated: true)
         }))
-        ac.addAction(UIAlertAction(title: "Отмена", style: .default, handler: nil))
-        present(ac, animated: true, completion: nil)
     }
 }

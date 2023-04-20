@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 let animalsArray = [
     "Собака", "Креветка", "Пеликан", "Осьминог", "Енот-полоскун",
@@ -45,3 +46,24 @@ let howToExplainArray = [
     "Объясняй сексуально"
 ]
 
+let avatars = [UIImage(named: "Ковбои"), UIImage(named: "Красотки"), UIImage(named: "food")
+]
+
+struct Team {
+    var name: String
+    var points: Int
+    var avatarName: UIImage?
+}
+
+var teams = [
+    Team(name: "Ковбои", points: 0, avatarName: avatars[0]),
+    Team(name: "Красотки", points: 0, avatarName: avatars[1])
+]
+
+class DataManager {
+    static let shared = DataManager()
+    var currentTeam = 1
+    var numberOfTeams = teams.count
+    var currentTeamIndex = 0
+    var totalRounds = 0
+}

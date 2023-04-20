@@ -26,6 +26,16 @@ class CustomCell: UITableViewCell {
     return element
   }()
   
+    var removeButton: UIButton = {
+    let element = UIButton(type: .system)
+    let image = UIImage(systemName: "xmark")
+    element.isHidden = true
+    element.setImage(image, for: .normal)
+    element.tintColor = .black
+    element.backgroundColor = .white
+    return element
+  }()
+  
   //  MARK: - Override Methods
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -41,17 +51,24 @@ class CustomCell: UITableViewCell {
 //  MARK: -  Private Methods
 extension CustomCell {
   
-  func configure(playerName: String, imageName: String) {
+  func configure(playerName: String, imageName: UIImage) {
     playerLabel.text = playerName
-    playerImage.image = UIImage(named: imageName)
+    playerImage.image = imageName
   }
   
   private func setViews() {
     addSubview(playerImage)
     addSubview(playerLabel)
+    addSubview(removeButton)
   }
   
   private func setConstraints() {
+    removeButton.snp.makeConstraints { make in
+      make.trailing.equalToSuperview().inset(20)
+      make.centerY.equalTo(playerLabel.snp.centerY)
+      make.height.width.equalTo(40)
+    }
+    
     playerLabel.snp.makeConstraints { make in
       make.center.equalToSuperview()
     }
