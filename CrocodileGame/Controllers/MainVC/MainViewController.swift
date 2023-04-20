@@ -84,7 +84,6 @@ class MainViewController: UIViewController {
     @objc func result () {
         let destinationViewController = TeamLeadersViewController()
         self.navigationController?.pushViewController(destinationViewController, animated: true)
-        print(Base.shared.teamDict.count)
 
     }
     

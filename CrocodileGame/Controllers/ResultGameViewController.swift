@@ -88,7 +88,8 @@ extension ResultGameViewController {
             tableViewTeam.topAnchor.constraint(equalTo: view.topAnchor, constant: 120),
             tableViewTeam.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             tableViewTeam.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            tableViewTeam.heightAnchor.constraint(equalToConstant: CGFloat(teami.count*130)),
+            tableViewTeam.bottomAnchor.constraint(equalTo: playAgainButton.topAnchor, constant: -20),
+            tableViewTeam.heightAnchor.constraint(equalToConstant: 80),
 
             playAgainButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
             playAgainButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
@@ -124,7 +125,7 @@ extension ResultGameViewController: UITableViewDelegate, UITableViewDataSource {
             
         default:
             let team = teams[indexPath.section]
-            cell.imageLogo.image = UIImage(named: teami.randomElement() ?? "")
+            cell.imageLogo.image = team.avatarName
             cell.labelNameTeam.text = team.name
             cell.labelCount.text = String(team.points)
 

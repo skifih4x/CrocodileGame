@@ -71,7 +71,7 @@ class TeamLeadersViewController: UIViewController {
             self.navigationController?.pushViewController(destinationViewController, animated: true)
         }
     @objc func clean () {
-        Base.shared.teamDict.removeAll()
+
     }
 
     }
