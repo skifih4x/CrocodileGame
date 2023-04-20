@@ -26,9 +26,10 @@ class CustomCell: UITableViewCell {
     return element
   }()
   
-  var removeButton: UIButton = {
+    var removeButton: UIButton = {
     let element = UIButton(type: .system)
     let image = UIImage(systemName: "xmark")
+    element.isHidden = true
     element.setImage(image, for: .normal)
     element.tintColor = .black
     element.backgroundColor = .white

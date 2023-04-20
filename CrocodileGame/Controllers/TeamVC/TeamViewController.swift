@@ -91,7 +91,8 @@ extension TeamViewController: UITableViewDataSource, UITableViewDelegate {
         let team = teams[indexPath.section]
         cell.configure(playerName: team.name, imageName: team.avatarName!)
         cell.removeButton.isHidden = teams.count <= 2
-        cell.removeButton.addTarget(self, action: #selector(deleteButtonTapped(_:)), for: .touchUpInside)
+        cell.removeButton.tag = indexPath.section
+        cell.removeButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         return cell
     }
     
@@ -107,6 +108,13 @@ extension TeamViewController: UITableViewDataSource, UITableViewDelegate {
         let hearderView = UIView()
         hearderView.backgroundColor = .clear
         return hearderView
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            teams.remove(at: indexPath.section)
+            tableView.deleteSections([indexPath.section], with: .automatic)
+        }
     }
 }
 //  MARK: -  Private Methods
@@ -186,12 +194,9 @@ extension TeamViewController {
         self.navigationController?.pushViewController(VC, animated: true)
     }
     
-    @objc private func deleteButtonTapped(_ sender: UIButton) {
-        guard let cell = sender.superview?.superview as? CustomCell,
-              let indexPath = tableView.indexPath(for: cell)
-        else { return }
-        teams.remove(at: indexPath.section)
-        tableView.deleteRows(at: [indexPath], with: .fade)
+    @objc func deleteButtonTapped(_ sender: UIButton) {
+        teams.remove(at: sender.tag)
+        tableView.reloadData()
     }
 }
 
