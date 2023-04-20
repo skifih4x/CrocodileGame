@@ -13,6 +13,18 @@ class TeamLeadersViewController: UIViewController {
     var team = ["Ковбои", "Стройняшки", "Красотки","Ковбои", "Стройняшки", "Красотки","Ковбои", "Стройняшки", "Красотки","Ковбои"]
     var points = String(5)
     
+    private lazy var startButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        button.setTitle("Очистить", for: .normal)
+        button.backgroundColor = #colorLiteral(red: 0.4549019608, green: 0.6549019608, blue: 0.1882352941, alpha: 1)
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(clean), for: .touchUpInside)
+        return button
+        }()
+    
     private lazy var labelResult: UILabel = {
         let label = UILabel()
         label.text = "Список лидеров"
@@ -33,7 +45,7 @@ class TeamLeadersViewController: UIViewController {
         tableView.layer.cornerRadius = 10
         tableView.isScrollEnabled = true
         tableView.showsVerticalScrollIndicator = false
-//        tableView.allowsSelection = false
+        tableView.allowsSelection = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
         }()
@@ -51,12 +63,16 @@ class TeamLeadersViewController: UIViewController {
             view.addSubview(backgroundImage)
             view.addSubview(labelResult)
             view.addSubview(tableViewTeam)
+            view.addSubview(startButton)
         }
         
         @objc func playAgain () {
             let destinationViewController = TeamViewController()
             self.navigationController?.pushViewController(destinationViewController, animated: true)
         }
+    @objc func clean () {
+
+    }
 
     }
 
@@ -77,9 +93,12 @@ class TeamLeadersViewController: UIViewController {
                 tableViewTeam.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
                 tableViewTeam.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
                 tableViewTeam.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                tableViewTeam.heightAnchor.constraint(equalToConstant: CGFloat(team.count*130)),
+                tableViewTeam.heightAnchor.constraint(equalToConstant: CGFloat(5*130)),
 
-                
+                startButton.heightAnchor.constraint(equalToConstant: 40),
+                startButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+                startButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+                startButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
             ])
         }
     }
@@ -106,15 +125,6 @@ class TeamLeadersViewController: UIViewController {
             cell.clipsToBounds = true
 
             switch indexPath.section {
-            case 0:
-                cell.imageLogo.image = UIImage(named: "Ковбои")
-                cell.labelNameTeam.text = "Ковбои"
-                cell.labelCount.text = points
-                
-            case 1:
-                cell.imageLogo.image = UIImage(named: "Красотки")
-                cell.labelNameTeam.text = "Красотки"
-                cell.labelCount.text = points
                 
             default:
                 cell.imageLogo.image = UIImage(named: team.randomElement() ?? "")

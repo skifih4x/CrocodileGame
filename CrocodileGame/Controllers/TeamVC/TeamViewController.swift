@@ -11,6 +11,8 @@ import SnapKit
 
 class TeamViewController: UIViewController {
     
+    let defaults = UserDefaults.standard
+    
     //  MARK: - UI
     private lazy var background: UIImageView = {
         let element = UIImageView()
