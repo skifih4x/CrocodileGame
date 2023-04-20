@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import AVFoundation
 
 class GameViewController: UIViewController {
     
     var timer = Timer()
     var counter = 60
+    var player: AVAudioPlayer!
   
     class DataManager {
         static let shared = DataManager()
@@ -130,6 +132,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         subviews()
         setupConstraints()
+        navigationItem.hidesBackButton = true
     }
     
     private func subviews() {
@@ -175,11 +178,28 @@ class GameViewController: UIViewController {
         ])
     }
     
+    func playSound(soundName: String) {
+        let url = Bundle.main.url(forResource: soundName, withExtension: "wav")
+        player = try! AVAudioPlayer(contentsOf: url!)
+        player.play()
+    }
+    
     @objc func updateTimer() {
-        if counter > 0 {
+        switch counter {
+        case 1...10:
+            counter -= 1
+            timerLabel.text = "0:0\(counter.description)"
+        case 11:
+            playSound(soundName: "10sec")
             counter -= 1
             timerLabel.text = "0:\(counter.description)"
-        } else {
+        case 12...60:
+            counter -= 1
+            timerLabel.text = "0:\(counter.description)"
+        case 0:
+            timerLabel.text = "ВРЕМЯ ВЫШЛО"
+            timerLabel.textColor = .red
+        default:
             timer.invalidate()
         }
     }
@@ -192,6 +212,7 @@ class GameViewController: UIViewController {
         }
         dm.totalRounds += 1
         let VC = ScoreTeamViewController()
+        playSound(soundName: "pravilnyiy-otvet")
         navigationController?.pushViewController(VC, animated: true)
     }
     
@@ -207,6 +228,7 @@ class GameViewController: UIViewController {
         VC.youGotLabel.text = "Вы не отгадали слово и не получаете очков!"
         VC.resultLabel.text = "0"
         VC.resultOfRoundView.backgroundColor = UIColor(red: 0.902, green: 0.275, blue: 0.275, alpha: 1)
+        playSound(soundName: "game-lost")
         navigationController?.pushViewController(VC, animated: true)
     }
     
