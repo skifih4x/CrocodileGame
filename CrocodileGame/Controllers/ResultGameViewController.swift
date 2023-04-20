@@ -9,8 +9,7 @@ import UIKit
 
 class ResultGameViewController: UIViewController {
     
-    var team = ["Ковбои", "Стройняшки", "Красотки","Ковбои"]
-    var points = String(5)
+    var teami = ["Ковбои", "Стройняшки", "Красотки"]
     
     private lazy var labelResult: UILabel = {
        let label = UILabel()
@@ -67,8 +66,8 @@ class ResultGameViewController: UIViewController {
     }
     
     @objc func playAgain () {
-        let destinationViewController = TeamViewController()
-        self.navigationController?.pushViewController(destinationViewController, animated: true)
+        
+        self.navigationController?.popToRootViewController(animated: true)
     }
 
 }
@@ -89,7 +88,7 @@ extension ResultGameViewController {
             tableViewTeam.topAnchor.constraint(equalTo: view.topAnchor, constant: 120),
             tableViewTeam.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             tableViewTeam.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            tableViewTeam.heightAnchor.constraint(equalToConstant: CGFloat(team.count*130)),
+            tableViewTeam.heightAnchor.constraint(equalToConstant: CGFloat(teami.count*130)),
 
             playAgainButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
             playAgainButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
@@ -107,7 +106,7 @@ extension ResultGameViewController: UITableViewDelegate, UITableViewDataSource {
 //    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        team.count
+        teams.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -122,33 +121,17 @@ extension ResultGameViewController: UITableViewDelegate, UITableViewDataSource {
         cell.clipsToBounds = true
 
         switch indexPath.section {
-        case 0:
-            cell.imageLogo.image = UIImage(named: "Ковбои")
-            cell.labelNameTeam.text = "Ковбои"
-            cell.labelCount.text = points
-            
-        case 1:
-            cell.imageLogo.image = UIImage(named: "Красотки")
-            cell.labelNameTeam.text = "Красотки"
-            cell.labelCount.text = points
             
         default:
-            cell.imageLogo.image = UIImage(named: team.randomElement() ?? "")
-            cell.labelNameTeam.text = team.randomElement() ?? "Look"
-            cell.labelCount.text = points
+            let team = teams[indexPath.section]
+            cell.imageLogo.image = UIImage(named: teami.randomElement() ?? "")
+            cell.labelNameTeam.text = team.name
+            cell.labelCount.text = String(team.points)
 
         }
         return cell
       }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-      1
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("aa")
-//      tableView.deselectRow(at: indexPath, animated: true)
-    }
+
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
       let hearderView = UIView()
