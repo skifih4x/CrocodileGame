@@ -60,4 +60,10 @@ var teams = [
     Team(name: "Красотки", points: 0, avatarName: avatars[1])
 ]
 
-
+class DataManager {
+    static let shared = DataManager()
+    var currentTeam = 1
+    var numberOfTeams = teams.count
+    var currentTeamIndex = 0
+    var totalRounds = 0
+}

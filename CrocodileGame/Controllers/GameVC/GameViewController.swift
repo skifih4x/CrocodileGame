@@ -14,13 +14,7 @@ class GameViewController: UIViewController {
     var counter = 60
     var player: AVAudioPlayer!
   
-    class DataManager {
-        static let shared = DataManager()
-        var totalRounds = 0
-        var currentTeam = 1
-        var numberOfTeams = 1
-    }
-        
+
     private lazy var backgroundView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "background"))
         imageView.contentMode = .scaleAspectFit
@@ -207,14 +201,19 @@ class GameViewController: UIViewController {
     @objc func tapRightButton() {
         let dm = DataManager.shared
         dm.currentTeam += 1
+       
         if dm.currentTeam > dm.numberOfTeams {
             dm.currentTeam = 1
         }
         dm.totalRounds += 1
+        teams[dm.currentTeam - 1].points += 1
+        
+        timer.invalidate()
         let VC = ScoreTeamViewController()
         playSound(soundName: "pravilnyiy-otvet")
         navigationController?.pushViewController(VC, animated: true)
     }
+
     
     @objc func tapWrongButton() {
         let dm = DataManager.shared
@@ -228,6 +227,7 @@ class GameViewController: UIViewController {
         VC.youGotLabel.text = "Вы не отгадали слово и не получаете очков!"
         VC.resultLabel.text = "0"
         VC.resultOfRoundView.backgroundColor = UIColor(red: 0.902, green: 0.275, blue: 0.275, alpha: 1)
+        timer.invalidate()
         playSound(soundName: "game-lost")
         navigationController?.pushViewController(VC, animated: true)
     }
@@ -237,6 +237,7 @@ class GameViewController: UIViewController {
         ac.addAction(UIAlertAction(title: "Отмена", style: .default, handler: nil))
         present(ac, animated: true, completion: nil)
         ac.addAction(UIAlertAction(title: "Да", style: .destructive, handler: { (action: UIAlertAction!) in
+            self.timer.invalidate()
             let VC = MainViewController()
             self.navigationController?.pushViewController(VC, animated: true)
         }))

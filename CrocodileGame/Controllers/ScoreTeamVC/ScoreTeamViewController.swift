@@ -35,7 +35,7 @@ class ScoreTeamViewController: UIViewController {
     private lazy var teamNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
-        label.text = "Ковбои"
+        label.text = teams[0].name
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -50,7 +50,7 @@ class ScoreTeamViewController: UIViewController {
     private lazy var teamScoreLabel: UILabel = {
         let label = UILabel()
         label.font = Resources.Fonts.CookieRegular(with: 50)
-        label.text = "1"
+        label.text = "\(teams[DataManager.shared.currentTeamIndex].points)"
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -119,7 +119,7 @@ class ScoreTeamViewController: UIViewController {
     private lazy var nextTurnLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.text = "следующий ход - "
+        label.text = "следующий ход - \(teams[1].name)"
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -250,21 +250,36 @@ class ScoreTeamViewController: UIViewController {
         ])
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        teamNames()
+    }
+    
+    func teamNames() {
+        let currentTeamIndex = DataManager.shared.currentTeamIndex
+        let nextTeamIndex = (currentTeamIndex + 1) % teams.count
+        
+        teamNameLabel.text = teams[currentTeamIndex].name
+        nextTurnLabel.text = "Следующий ход - \(teams[nextTeamIndex].name)"
+    }
+    
     func reloadButton(){
-        if GameViewController.DataManager.shared.totalRounds == 5 {
-            GameViewController.DataManager.shared.totalRounds = 0
+        if DataManager.shared.totalRounds == teams.count * 5 {
+            DataManager.shared.totalRounds = 0
             passButton.isHidden = true
             resultsButton.isHidden = false
         }
     }
     
     @objc func tapPassButton() {
-        let VC = GameViewController()
-        if GameViewController.DataManager.shared.totalRounds < 5 {
-            self.navigationController?.pushViewController(VC, animated: true)
+        if DataManager.shared.totalRounds <= teams.count * 5 {
+            let nextTeamIndex = (DataManager.shared.currentTeamIndex + 1) % teams.count
+            DataManager.shared.currentTeamIndex = nextTeamIndex
+            let gameVC = GameViewController()
+            self.navigationController?.pushViewController(gameVC, animated: true)
         }
     }
-    
+
     @objc func resultsTapped() {
         let VC = ResultGameViewController()
         self.navigationController?.pushViewController(VC, animated: true)
