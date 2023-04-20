@@ -13,6 +13,8 @@ class GameViewController: UIViewController {
     var timer = Timer()
     var counter = 60
     var player: AVAudioPlayer!
+    var word = ""
+    var explanationType = ""
   
 
     private lazy var backgroundView: UIImageView = {
@@ -44,7 +46,7 @@ class GameViewController: UIViewController {
     private lazy var whichWordLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 48, weight: .bold)
-        label.text = "Картошка"
+        label.text = word
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
