@@ -46,10 +46,18 @@ let howToExplainArray = [
     "Объясняй сексуально"
 ]
 
-var teams: [String: Int] = [
-    "Ковбои": 0,
-    "Стройняшки": 0
-]
-
 let avatars = [UIImage(named: "Ковбои"), UIImage(named: "Красотки"), UIImage(named: "food")
 ]
+
+struct Team {
+    var name: String
+    var points: Int
+    var avatarName: UIImage?
+}
+
+var teams = [
+    Team(name: "Ковбои", points: 0, avatarName: avatars[0]),
+    Team(name: "Красотки", points: 0, avatarName: avatars[1])
+]
+
+

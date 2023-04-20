@@ -26,7 +26,7 @@ class CustomCell: UITableViewCell {
     return element
   }()
   
-  private lazy var removeButton: UIButton = {
+  var removeButton: UIButton = {
     let element = UIButton(type: .system)
     let image = UIImage(systemName: "xmark")
     element.setImage(image, for: .normal)
@@ -50,9 +50,9 @@ class CustomCell: UITableViewCell {
 //  MARK: -  Private Methods
 extension CustomCell {
   
-  func configure(playerName: String, imageName: String) {
+  func configure(playerName: String, imageName: UIImage) {
     playerLabel.text = playerName
-    playerImage.image = UIImage(named: imageName)
+    playerImage.image = imageName
   }
   
   private func setViews() {

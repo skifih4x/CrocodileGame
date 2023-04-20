@@ -55,6 +55,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setConstraints()
+        navigationItem.hidesBackButton = true
     }
     
     private func setupView () {
