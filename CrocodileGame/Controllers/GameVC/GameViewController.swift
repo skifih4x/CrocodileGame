@@ -15,8 +15,8 @@ class GameViewController: UIViewController {
     var player: AVAudioPlayer!
     var word = ""
     var explanationType = ""
-  
-
+    var audioSession = AVAudioSession.sharedInstance()
+    
     private lazy var backgroundView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "background"))
         imageView.contentMode = .scaleAspectFit
@@ -129,6 +129,8 @@ class GameViewController: UIViewController {
         subviews()
         setupConstraints()
         navigationItem.hidesBackButton = true
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
+        try? AVAudioSession.sharedInstance().setActive(true)
     }
     
     private func subviews() {
@@ -175,9 +177,15 @@ class GameViewController: UIViewController {
     }
     
     func playSound(soundName: String) {
-        let url = Bundle.main.url(forResource: soundName, withExtension: "wav")
-        player = try! AVAudioPlayer(contentsOf: url!)
-        player.play()
+        guard let url = Bundle.main.url(forResource: soundName, withExtension: "wav") else { return }
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
+            player.play()
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
     
     @objc func updateTimer() {

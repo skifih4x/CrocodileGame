@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ScoreTeamViewController: UIViewController {
+    
+    var audioSession = AVAudioSession.sharedInstance()
     
     private lazy var backgroundView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "background"))
@@ -158,6 +161,16 @@ class ScoreTeamViewController: UIViewController {
         setupConstraints()
         navigationItem.hidesBackButton = true
         reloadButton()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        do {
+            try audioSession.setCategory(.ambient, mode: .default, options: [])
+            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+        } catch {
+            print("Error setting up audio session: \(error.localizedDescription)")
+        }
     }
     
     private func subviews() {
