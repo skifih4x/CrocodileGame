@@ -103,6 +103,7 @@ extension TeamViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        changeName(at: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -199,6 +200,24 @@ extension TeamViewController {
     @objc func deleteButtonTapped(_ sender: UIButton) {
         teams.remove(at: sender.tag)
         tableView.reloadData()
+    }
+    
+    func changeName(at indexPath: IndexPath) {
+        let ac = UIAlertController(title: "Введите новое имя команды", message: nil, preferredStyle: .alert)
+        ac.addTextField { (textField) in
+            textField.placeholder = "Имя команды"
+        }
+        ac.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        ac.addAction(UIAlertAction(title: "ОК", style: .default, handler: { [weak self] (action) in
+            guard let textField = ac.textFields?.first,
+                  let newName = textField.text,
+                  !newName.isEmpty else {
+                return
+            }
+            teams[indexPath.section].name = newName
+            self?.tableView.reloadData()
+        }))
+        present(ac, animated: true, completion: nil)
     }
 }
 

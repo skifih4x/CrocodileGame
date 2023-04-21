@@ -15,8 +15,9 @@ class GameViewController: UIViewController {
     var player: AVAudioPlayer!
     var word = ""
     var explanationType = ""
-  
 
+    var audioSession = AVAudioSession.sharedInstance()
+    
     private lazy var backgroundView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "background"))
         imageView.contentMode = .scaleAspectFit
@@ -129,6 +130,8 @@ class GameViewController: UIViewController {
         subviews()
         setupConstraints()
         navigationItem.hidesBackButton = true
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
+        try? AVAudioSession.sharedInstance().setActive(true)
     }
     
     private func subviews() {
@@ -175,9 +178,15 @@ class GameViewController: UIViewController {
     }
     
     func playSound(soundName: String) {
-        let url = Bundle.main.url(forResource: soundName, withExtension: "wav")
-        player = try! AVAudioPlayer(contentsOf: url!)
-        player.play()
+        guard let url = Bundle.main.url(forResource: soundName, withExtension: "wav") else { return }
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
+            player.play()
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
     
     @objc func updateTimer() {
@@ -202,13 +211,11 @@ class GameViewController: UIViewController {
     
     @objc func tapRightButton() {
         let dm = DataManager.shared
-        dm.currentTeam += 1
-       
         if dm.currentTeam > dm.numberOfTeams {
-            dm.currentTeam = 1
+            dm.currentTeam += 1
         }
         dm.totalRounds += 1
-        teams[dm.currentTeam - 1].points += 1
+        teams[dm.currentTeam].points += 1
         
         timer.invalidate()
         let VC = ScoreTeamViewController()
@@ -219,9 +226,8 @@ class GameViewController: UIViewController {
     
     @objc func tapWrongButton() {
         let dm = DataManager.shared
-        dm.currentTeam += 1
         if dm.currentTeam > dm.numberOfTeams {
-            dm.currentTeam = 1
+            dm.currentTeam += 1
         }
         dm.totalRounds += 1
         let VC = ScoreTeamViewController()
@@ -242,6 +248,9 @@ class GameViewController: UIViewController {
             self.timer.invalidate()
             let VC = MainViewController()
             self.navigationController?.pushViewController(VC, animated: true)
+            for i in 0..<teams.count {
+                teams[i].points = 0
+            }
         }))
     }
 }

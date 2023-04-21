@@ -62,8 +62,7 @@ var teams = [
 
 class DataManager {
     static let shared = DataManager()
-    var currentTeam = 1
+    var currentTeam = 0
     var numberOfTeams = teams.count
-    var currentTeamIndex = 0
     var totalRounds = 0
 }
