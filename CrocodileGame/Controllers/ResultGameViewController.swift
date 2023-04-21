@@ -54,6 +54,11 @@ class ResultGameViewController: UIViewController {
         setConstraints()
         
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        resetResults()
+    }
 
     private func setupView () {
         self.navigationItem.hidesBackButton = true
@@ -66,10 +71,14 @@ class ResultGameViewController: UIViewController {
     }
     
     @objc func playAgain () {
-        
         self.navigationController?.popToRootViewController(animated: true)
     }
-
+    
+    func resetResults() {
+        for i in 0..<teams.count {
+            teams[i].points = 0
+        }
+    }
 }
 
 extension ResultGameViewController {

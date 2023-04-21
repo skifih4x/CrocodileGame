@@ -38,7 +38,7 @@ class ScoreTeamViewController: UIViewController {
     private lazy var teamNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
-        label.text = teams[0].name
+        label.text = "\(teams[DataManager.shared.currentTeam].name)"
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -53,7 +53,7 @@ class ScoreTeamViewController: UIViewController {
     private lazy var teamScoreLabel: UILabel = {
         let label = UILabel()
         label.font = Resources.Fonts.CookieRegular(with: 50)
-        label.text = "\(teams[DataManager.shared.currentTeamIndex].points)"
+        label.text = "\(teams[DataManager.shared.currentTeam].points)"
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -269,11 +269,11 @@ class ScoreTeamViewController: UIViewController {
     }
     
     func teamNames() {
-        let currentTeamIndex = DataManager.shared.currentTeamIndex
-        let nextTeamIndex = (currentTeamIndex + 1) % teams.count
+        let currentTeam = DataManager.shared.currentTeam
+        let nextTeam = (currentTeam + 1) % teams.count
         
-        teamNameLabel.text = teams[currentTeamIndex].name
-        nextTurnLabel.text = "Следующий ход - \(teams[nextTeamIndex].name)"
+        teamNameLabel.text = teams[currentTeam].name
+        nextTurnLabel.text = "Следующий ход - \(teams[nextTeam].name)"
     }
     
     func reloadButton(){
@@ -286,8 +286,8 @@ class ScoreTeamViewController: UIViewController {
     
     @objc func tapPassButton() {
         if DataManager.shared.totalRounds <= teams.count * 5 {
-            let nextTeamIndex = (DataManager.shared.currentTeamIndex + 1) % teams.count
-            DataManager.shared.currentTeamIndex = nextTeamIndex
+            let nextTeam = (DataManager.shared.currentTeam + 1) % teams.count
+            DataManager.shared.currentTeam = nextTeam
             let gameVC = GameViewController()
             self.navigationController?.pushViewController(gameVC, animated: true)
         }

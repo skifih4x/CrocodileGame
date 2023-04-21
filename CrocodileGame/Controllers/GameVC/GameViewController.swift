@@ -15,6 +15,7 @@ class GameViewController: UIViewController {
     var player: AVAudioPlayer!
     var word = ""
     var explanationType = ""
+
     var audioSession = AVAudioSession.sharedInstance()
     
     private lazy var backgroundView: UIImageView = {
@@ -210,13 +211,11 @@ class GameViewController: UIViewController {
     
     @objc func tapRightButton() {
         let dm = DataManager.shared
-        dm.currentTeam += 1
-       
         if dm.currentTeam > dm.numberOfTeams {
-            dm.currentTeam = 1
+            dm.currentTeam += 1
         }
         dm.totalRounds += 1
-        teams[dm.currentTeam - 1].points += 1
+        teams[dm.currentTeam].points += 1
         
         timer.invalidate()
         let VC = ScoreTeamViewController()
@@ -227,9 +226,8 @@ class GameViewController: UIViewController {
     
     @objc func tapWrongButton() {
         let dm = DataManager.shared
-        dm.currentTeam += 1
         if dm.currentTeam > dm.numberOfTeams {
-            dm.currentTeam = 1
+            dm.currentTeam += 1
         }
         dm.totalRounds += 1
         let VC = ScoreTeamViewController()
@@ -250,6 +248,9 @@ class GameViewController: UIViewController {
             self.timer.invalidate()
             let VC = MainViewController()
             self.navigationController?.pushViewController(VC, animated: true)
+            for i in 0..<teams.count {
+                teams[i].points = 0
+            }
         }))
     }
 }
