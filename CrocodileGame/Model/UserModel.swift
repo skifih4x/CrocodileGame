@@ -35,9 +35,11 @@ class Base {
         if let existingUser = full.first(where: { $0.name == name }) {
             let updatedUser = Users(name: name, points: existingUser.points + points)
             full = full.filter { $0.name != name } + [updatedUser]
+            full = full.sorted {$0.points > $1.points}
         } else {
             let user = Users(name: name, points: points)
             full.append(user)
+            full = full.sorted {$0.points > $1.points}
         }
     }
 
