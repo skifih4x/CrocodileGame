@@ -9,8 +9,7 @@ import UIKit
 
 class ResultGameViewController: UIViewController {
     
-    var teami = ["Ковбои", "Стройняшки", "Красотки"]
-    
+    let defauls = UserDefaults.standard
     private lazy var labelResult: UILabel = {
        let label = UILabel()
         label.text = "Результаты"
@@ -137,6 +136,7 @@ extension ResultGameViewController: UITableViewDelegate, UITableViewDataSource {
             cell.imageLogo.image = team.avatarName
             cell.labelNameTeam.text = team.name
             cell.labelCount.text = String(team.points)
+            Base.shared.saveTeam(name: team.name, points: team.points)
 
         }
         return cell
