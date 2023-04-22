@@ -57,7 +57,11 @@ class CategoryCell: UITableViewCell {
   }
   
   func showImage() {
-    checkmarkImage.isHidden = false
+    checkmarkImage.isHidden.toggle()
+  }
+  
+  func imageCheched() -> Bool {
+    !checkmarkImage.isHidden
   }
 }
 
@@ -83,7 +87,7 @@ extension CategoryCell {
     categoryImage.snp.makeConstraints { make in
       make.leading.equalToSuperview().inset(17)
       make.centerY.equalToSuperview()
-      make.height.width.equalTo(45)
+      make.height.width.equalTo(56)
     }
   }
 }

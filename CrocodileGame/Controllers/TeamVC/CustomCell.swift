@@ -76,7 +76,7 @@ extension CustomCell {
     playerImage.snp.makeConstraints { make in
       make.leading.equalToSuperview().inset(17)
       make.centerY.equalToSuperview()
-      make.height.width.equalTo(45)
+      make.height.width.equalTo(56)
     }
   }
 }

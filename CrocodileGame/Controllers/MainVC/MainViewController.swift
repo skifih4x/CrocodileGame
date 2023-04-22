@@ -55,7 +55,8 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setConstraints()
-        navigationItem.hidesBackButton = true
+      navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+      
     }
     
     private func setupView () {
@@ -66,8 +67,6 @@ class MainViewController: UIViewController {
         view.addSubview(startButton)
         view.addSubview(rulesButton)
         view.addSubview(resultButton)
-
-
     }
     
     @objc func start () {

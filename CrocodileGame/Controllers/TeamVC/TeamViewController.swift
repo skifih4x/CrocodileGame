@@ -20,24 +20,16 @@ class TeamViewController: UIViewController {
         return element
     }()
     
-    private lazy var textLabel: UILabel = {
+    private lazy var whoPlaysLabel: UILabel = {
         let element = UILabel()
         element.text = "Кто играет?"
         element.font = UIFont.systemFont(ofSize: 40, weight: .bold)
         return element
     }()
     
-    private lazy var arrowButton: UIButton = {
-        let element = UIButton(type: .system)
-        let image = #imageLiteral(resourceName: "Arrow")
-        element.setImage(image, for: .normal)
-        element.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return element
-    }()
-    
     private lazy var tableView: UITableView = {
         let element = UITableView()
-        element.rowHeight = 120
+        element.rowHeight = 96
         element.backgroundColor = .clear
         element.register(CustomCell.self, forCellReuseIdentifier: CustomCell.reuseIdentifier)
         element.layer.cornerRadius = 10
@@ -69,6 +61,7 @@ class TeamViewController: UIViewController {
     //  MARK: - Override Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+      navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         setViews()
         setConstraints()
         setDelegates()
@@ -129,30 +122,24 @@ extension TeamViewController {
     
     private func setViews() {
         view.addSubview(background)
-        view.addSubview(arrowButton)
-        view.addSubview(textLabel)
+      view.addSubview(whoPlaysLabel)
         view.addSubview(tableView)
         view.addSubview(addButton)
         view.addSubview(readyButton)
     }
     
     private func setConstraints() {
+      
+      whoPlaysLabel.snp.makeConstraints { make in
+        make.centerX.equalToSuperview()
+        make.top.equalToSuperview().inset(45)
+      }
         background.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        arrowButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(14)
-            make.centerY.equalTo(textLabel.snp.centerY)
-        }
-        
-        textLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(view.snp_topMargin)
-        }
-        
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(textLabel.snp.bottom).offset(16)
+          make.top.equalTo(whoPlaysLabel.snp.bottom).inset(36)
             make.leading.trailing.equalToSuperview().inset(14)
             make.height.equalToSuperview().multipliedBy(0.5)
         }

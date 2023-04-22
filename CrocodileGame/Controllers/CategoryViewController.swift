@@ -17,7 +17,7 @@ class CategoryViewController: UIViewController {
     return element
   }()
   
-  private lazy var textLabel: UILabel = {
+  private lazy var categoryLabel: UILabel = {
     let element = UILabel()
     element.text = "Категории"
     element.font = UIFont.systemFont(ofSize: 40, weight: .bold)
@@ -33,10 +33,11 @@ class CategoryViewController: UIViewController {
   
   private lazy var tableView: UITableView = {
     let element = UITableView()
-    element.rowHeight = 120
+    element.rowHeight = 96
     element.backgroundColor = .clear
-    element.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.reuseIdentifier)
     element.layer.cornerRadius = 10
+    element.isScrollEnabled = false
+    element.register(CategoryCell.self, forCellReuseIdentifier: CategoryCell.reuseIdentifier)
     return element
   }()
   
@@ -56,6 +57,7 @@ class CategoryViewController: UIViewController {
   //  MARK: - Override Methods
   override func viewDidLoad() {
     super.viewDidLoad()
+//    navigationController?.isNavigationBarHidden = true 
     setViews()
     setConstraints()
     tableView.dataSource = self
@@ -88,7 +90,7 @@ extension CategoryViewController: UITableViewDataSource, UITableViewDelegate {
     switch indexPath.section {
     case 0:
       cell.backgroundColor = #colorLiteral(red: 0.68447721, green: 0.2047993839, blue: 0.7666496634, alpha: 1)
-      cell.configure(categoryPicture: "animal", categoryText: "Животные")
+      cell.configure(categoryPicture: "frog", categoryText: "Животные")
     case 1:
       cell.backgroundColor = #colorLiteral(red: 0.7802433372, green: 0.8300433755, blue: 0.1574678123, alpha: 1)
       cell.configure(categoryPicture: "food", categoryText: "Еда")
@@ -115,8 +117,11 @@ extension CategoryViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     guard let cell = tableView.cellForRow(at: indexPath) as? CategoryCell else { return }
-    startButton.tag = indexPath.section
     cell.showImage()
+    print(cell.imageCheched())
+    if cell.imageCheched() {
+    startButton.tag = indexPath.section
+    }
   }
 }
 
@@ -125,7 +130,7 @@ extension CategoryViewController {
   private func setViews() {
     view.addSubview(background)
     view.addSubview(arrowButton)
-    view.addSubview(textLabel)
+    view.addSubview(categoryLabel)
     view.addSubview(tableView)
     view.addSubview(startButton)
   }
@@ -135,18 +140,13 @@ extension CategoryViewController {
       make.edges.equalToSuperview()
     }
     
-    arrowButton.snp.makeConstraints { make in
-      make.leading.equalToSuperview().inset(16)
-      make.centerY.equalTo(textLabel.snp.centerY)
-    }
-    
-    textLabel.snp.makeConstraints { make in
+    categoryLabel.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
-      make.top.equalTo(view.snp_topMargin)
+      make.top.equalToSuperview().inset(45)
     }
     
     tableView.snp.makeConstraints { make in
-      make.top.equalTo(textLabel.snp.bottom).offset(36)
+      make.top.equalTo(categoryLabel.snp.bottom).offset(96)
       make.leading.trailing.equalToSuperview().inset(14)
       make.bottom.greaterThanOrEqualTo(startButton.snp.top)
     }
