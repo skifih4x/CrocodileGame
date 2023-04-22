@@ -14,8 +14,7 @@ class GameViewController: UIViewController {
     var counter = 60
     var player: AVAudioPlayer!
     var word = ""
-    var explanationType = ""
-
+    
     var audioSession = AVAudioSession.sharedInstance()
     
     private lazy var backgroundView: UIImageView = {
@@ -49,7 +48,9 @@ class GameViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 48, weight: .bold)
         label.text = word
         label.textColor = .black
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -129,6 +130,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         subviews()
         setupConstraints()
+        showNext()
         navigationItem.hidesBackButton = true
         try? AVAudioSession.sharedInstance().setCategory(.playback)
         try? AVAudioSession.sharedInstance().setActive(true)
@@ -162,12 +164,13 @@ class GameViewController: UIViewController {
             timerLabel.heightAnchor.constraint(equalToConstant: 37),
             
             whichWordLabel.topAnchor.constraint(equalTo: timerLabel.bottomAnchor, constant: 90),
-            whichWordLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            whichWordLabel.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
             whichWordLabel.heightAnchor.constraint(equalToConstant: 48),
             
             howToExplainLabel.topAnchor.constraint(equalTo: whichWordLabel.bottomAnchor, constant: 10),
             howToExplainLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             howToExplainLabel.heightAnchor.constraint(equalToConstant: 48),
+            howToExplainLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 300),
             
             buttonsStackView.topAnchor.constraint(equalTo: howToExplainLabel.bottomAnchor, constant: 100),
             buttonsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -222,7 +225,7 @@ class GameViewController: UIViewController {
         playSound(soundName: "pravilnyiy-otvet")
         navigationController?.pushViewController(VC, animated: true)
     }
-
+    
     
     @objc func tapWrongButton() {
         let dm = DataManager.shared
@@ -246,11 +249,25 @@ class GameViewController: UIViewController {
         present(ac, animated: true, completion: nil)
         ac.addAction(UIAlertAction(title: "Да", style: .destructive, handler: { (action: UIAlertAction!) in
             self.timer.invalidate()
-            let VC = MainViewController()
-            self.navigationController?.pushViewController(VC, animated: true)
+            self.navigationController?.popToRootViewController(animated: true)
             for i in 0..<teams.count {
                 teams[i].points = 0
             }
         }))
+    }
+    
+    private func showNext() {
+        let vc = CategoryViewController()
+        let dm = DataManager.shared
+        guard let words = vc.dataBase[dm.currentCategory] else { return }
+        
+        var newIndex = Int.random(in: 0..<words.count)
+        while newIndex == dm.lastWordIndex {
+            newIndex = Int.random(in: 0..<words.count)
+        }
+        
+        dm.lastWordIndex = newIndex
+        word = words[newIndex]
+        whichWordLabel.text = word
     }
 }
