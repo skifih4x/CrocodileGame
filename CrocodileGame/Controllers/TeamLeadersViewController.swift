@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 
 class TeamLeadersViewController: UIViewController {
-        
-    var team = ["Ковбои", "Стройняшки", "Красотки","Ковбои", "Стройняшки", "Красотки","Ковбои", "Стройняшки", "Красотки","Ковбои"]
-    var points = String(5)
+    
+    var teams = ["Ковбои", "Стройняшки", "Красотки","Ковбои", "Стройняшки", "Красотки","Ковбои", "Стройняшки", "Красотки","Ковбои"]
+//    var points = String(5)
     
     private lazy var startButton: UIButton = {
         let button = UIButton(type: .system)
@@ -71,10 +71,11 @@ class TeamLeadersViewController: UIViewController {
             self.navigationController?.pushViewController(destinationViewController, animated: true)
         }
     @objc func clean () {
+        Base.shared.full.removeAll()
 
+        }
     }
 
-    }
 
     extension TeamLeadersViewController {
         private func setConstraints() {
@@ -110,7 +111,8 @@ class TeamLeadersViewController: UIViewController {
     //    }
         
         func numberOfSections(in tableView: UITableView) -> Int {
-            team.count
+            Base.shared.full.count
+
         }
         
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -127,9 +129,10 @@ class TeamLeadersViewController: UIViewController {
             switch indexPath.section {
                 
             default:
-                cell.imageLogo.image = UIImage(named: team.randomElement() ?? "")
-                cell.labelNameTeam.text = team.randomElement() ?? "Look"
-                cell.labelCount.text = points
+                let team = Base.shared.full[indexPath.section]
+                cell.imageLogo.image = UIImage(named: teams.randomElement() ?? "")
+                cell.labelNameTeam.text = team.name
+                cell.labelCount.text = String(team.points)
 
             }
             return cell
