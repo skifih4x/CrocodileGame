@@ -72,7 +72,7 @@ class TeamLeadersViewController: UIViewController {
         }
     @objc func clean () {
         Base.shared.full.removeAll()
-
+        tableViewTeam.reloadData()
         }
     }
 

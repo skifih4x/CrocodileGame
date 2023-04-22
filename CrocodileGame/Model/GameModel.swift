@@ -66,5 +66,5 @@ class DataManager {
     var numberOfTeams = teams.count
     var totalRounds = 0
     var currentCategory = 0
-    var lastWordIndex: Int?
+    var usedWordIndices = Set<Int>()
 }

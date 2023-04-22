@@ -130,10 +130,14 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         subviews()
         setupConstraints()
-        showNext()
         navigationItem.hidesBackButton = true
         try? AVAudioSession.sharedInstance().setCategory(.playback)
         try? AVAudioSession.sharedInstance().setActive(true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        showNextWord()
     }
     
     private func subviews() {
@@ -256,18 +260,18 @@ class GameViewController: UIViewController {
         }))
     }
     
-    private func showNext() {
-        let vc = CategoryViewController()
-        let dm = DataManager.shared
-        guard let words = vc.dataBase[dm.currentCategory] else { return }
-        
-        var newIndex = Int.random(in: 0..<words.count)
-        while newIndex == dm.lastWordIndex {
-            newIndex = Int.random(in: 0..<words.count)
+    private func showNextWord() {
+            let vc = CategoryViewController()
+            let dm = DataManager.shared
+            guard let words = vc.dataBase[dm.currentCategory] else { return }
+            
+            var newIndex = Int.random(in: 0..<words.count)
+            while dm.usedWordIndices.contains(newIndex) {
+                newIndex = Int.random(in: 0..<words.count)
+            }
+            
+            dm.usedWordIndices.insert(newIndex)
+            word = words[newIndex]
+            whichWordLabel.text = word
         }
-        
-        dm.lastWordIndex = newIndex
-        word = words[newIndex]
-        whichWordLabel.text = word
-    }
 }
