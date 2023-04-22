@@ -33,6 +33,7 @@ class TeamViewController: UIViewController {
         element.backgroundColor = .clear
         element.register(CustomCell.self, forCellReuseIdentifier: CustomCell.reuseIdentifier)
         element.layer.cornerRadius = 10
+        element.showsVerticalScrollIndicator = false
         return element
     }()
     
@@ -139,9 +140,9 @@ extension TeamViewController {
         }
         
         tableView.snp.makeConstraints { make in
-          make.top.equalTo(whoPlaysLabel.snp.bottom).inset(36)
+          make.top.equalTo(whoPlaysLabel.snp.bottom).offset(16)
             make.leading.trailing.equalToSuperview().inset(14)
-            make.height.equalToSuperview().multipliedBy(0.5)
+            make.height.equalToSuperview().multipliedBy(0.6)
         }
         
         addButton.snp.makeConstraints { make in
