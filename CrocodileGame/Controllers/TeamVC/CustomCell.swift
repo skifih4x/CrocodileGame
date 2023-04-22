@@ -32,7 +32,7 @@ class CustomCell: UITableViewCell {
     element.isHidden = true
     element.setImage(image, for: .normal)
     element.tintColor = .black
-    element.backgroundColor = .white
+    element.backgroundColor = .clear
     return element
   }()
   
